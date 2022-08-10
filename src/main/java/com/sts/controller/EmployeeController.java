@@ -35,7 +35,7 @@ public class EmployeeController {
 			
 	
 	// create employee rest api
-	@PostMapping("/employees")
+	@PostMapping("/captureemployee")
 	public EmployeeDetails createStudent(@RequestBody EmployeeDetails employee) {
 		return employeeRepository.save(employee);
 	}
