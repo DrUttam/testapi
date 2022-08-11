@@ -66,11 +66,12 @@ public class EmployeeController {
 
 	
 	@GetMapping("/employees/{id}")
-	public ResponseEntity<Double> updateStudent(@PathVariable Long id , @PathVariable int salary, @PathVariable Date doj, @RequestBody EmployeeDetails studentDetails){
+	public ResponseEntity<Double> taxEmployee(@PathVariable Long id , @PathVariable Integer salary, @PathVariable Date doj, @RequestBody EmployeeDetails employeeDetails){
 		EmployeeDetails employee = employeeRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Student not exist with id :" + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
 		
-		EmployeeDetails empsalary = employeeRepository.findBySalary(salary);
+//		int empsalary = (int) employeeRepository.findBySalary(salary);
+		int empsalary = 20;
 		CharSequence deoj = (CharSequence) employeeRepository.findByDoj(doj);
 
 		
@@ -94,7 +95,7 @@ public class EmployeeController {
 	    	 
 	      }
 	
-	      Totalsalary=(empsalary*month)+((empsalary/30)*days);
+	      Totalsalary = (empsalary*month)+((empsalary/30)*days);
 	      
 		    int i = Totalsalary;
 			double tax;	

@@ -16,7 +16,7 @@ public interface EmployeeRepository extends JpaRepository<EmployeeDetails, Long>
 	//public java.util.List<EmployeeDetails> findByName(String firstName);
 //	public java.util.List<EmployeeDetails> findBySallary(String salary);
 
-	public java.util.List<EmployeeDetails> findBySalary(int salary);
+	public int findBySalary(int salary);
 
 	public Date findByDoj(Date doj); 
 
