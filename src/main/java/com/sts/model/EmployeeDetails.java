@@ -1,5 +1,7 @@
 package com.sts.model;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,10 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "employeedetals")
 public class EmployeeDetails {
 	
+	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -27,11 +33,14 @@ public class EmployeeDetails {
 	@Column(name = "mobile_no")
 	private String mobileNo;
 	
-	@Column(name = "doj")
-	private String doj;
+	//@JsonFormat(pattern="yyyy-MM-dd")
+	@Column(name = "doj")	
+	private Date doj;
 	
 	@Column(name = "salary")
-	private String salary;
+	private int salary;
+
+	
 	
 
 	
@@ -42,8 +51,11 @@ public class EmployeeDetails {
 	
 	
 
-	public EmployeeDetails(String firstName, String lastName, String emailId, String mobileNo, String doj,
-			String salary) {
+	
+
+
+	public EmployeeDetails(String firstName, String lastName, String emailId, String mobileNo, Date doj,
+			int salary) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -56,9 +68,15 @@ public class EmployeeDetails {
 
 
 
+
+
+
 	public long getId() {
 		return id;
 	}
+
+
+
 
 
 
@@ -70,9 +88,15 @@ public class EmployeeDetails {
 
 
 
+
+
+
 	public String getFirstName() {
 		return firstName;
 	}
+
+
+
 
 
 
@@ -84,9 +108,15 @@ public class EmployeeDetails {
 
 
 
+
+
+
 	public String getLastName() {
 		return lastName;
 	}
+
+
+
 
 
 
@@ -98,9 +128,15 @@ public class EmployeeDetails {
 
 
 
+
+
+
 	public String getEmailId() {
 		return emailId;
 	}
+
+
+
 
 
 
@@ -112,9 +148,15 @@ public class EmployeeDetails {
 
 
 
+
+
+
 	public String getMobileNo() {
 		return mobileNo;
 	}
+
+
+
 
 
 
@@ -126,30 +168,44 @@ public class EmployeeDetails {
 
 
 
-	public String getDoj() {
+
+
+
+	public Date getDoj() {
 		return doj;
 	}
 
 
 
 
-	public void setDoj(String doj) {
+
+
+
+	public void setDoj(Date doj) {
 		this.doj = doj;
 	}
 
 
 
 
-	public String getSalary() {
+
+
+
+	public int getSalary() {
 		return salary;
 	}
 
 
 
 
-	public void setSalary(String salary) {
+
+
+
+	public void setSalary(int salary) {
 		this.salary = salary;
 	}
+
+
 
 
 
