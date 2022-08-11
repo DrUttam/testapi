@@ -3,6 +3,7 @@ package com.sts.controller;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
+import java.time.ZoneId;
 import java.time.chrono.ChronoLocalDate;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,11 +42,7 @@ public class EmployeeController {
 	private LocalDate sdformat;
 	
 	
-	// get all student
-//	@GetMapping("/students")
-//	public List<EmployeeDetails> getAllStudents(){
-//		return studentRepository.findAll();
-//	}		
+		
 	
 	// create employee rest api
 	@PostMapping("/captureemployee")
@@ -55,7 +52,7 @@ public class EmployeeController {
 	
 	
 	
-	// get student by id rest api
+	// get employee by id rest api
 	@GetMapping("/calculatetaxs/{id}")
 	public ResponseEntity<EmployeeDetails> getEmployeeById(@PathVariable Long id) {
 		EmployeeDetails employee = employeeRepository.findById(id)
@@ -66,18 +63,18 @@ public class EmployeeController {
 
 	
 	@GetMapping("/employees/{id}")
-	public ResponseEntity<Double> taxEmployee(@PathVariable Long id , @PathVariable Integer salary, @PathVariable Date doj, @RequestBody EmployeeDetails employeeDetails){
+	public ResponseEntity<Integer> taxEmployee(@PathVariable Long id){
 		EmployeeDetails employee = employeeRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
 		
-//		int empsalary = (int) employeeRepository.findBySalary(salary);
-		int empsalary = 20;
-		CharSequence deoj = (CharSequence) employeeRepository.findByDoj(doj);
 
-		
+		int empsalary = employee.getSalary();
+		Date deoj = employee.getDoj();
+
+		   	 ZoneId defaultZoneId = ZoneId.systemDefault();
 		  LocalDate startdate = sdformat.parse("2022-04-01");
 	      LocalDate enddate = sdformat.parse("2023-03-31");
-	      LocalDate dojd = sdformat.parse(deoj);
+	      LocalDate dojd = deoj.toInstant().atZone(ZoneId.of("America/Los_Angeles")).toLocalDate();
 	      
 	
 	    int Totalsalary=0;
@@ -112,9 +109,14 @@ public class EmployeeController {
 		if (i>2500000) {
 		tax = tax + (i-2500000)*0.2;		
 		}
-
-		return ResponseEntity.ok(tax);
+//         return(empsalary);
+		return ResponseEntity.ok(empsalary);
 	}
+
+
+
+
+
 
 }
 	
