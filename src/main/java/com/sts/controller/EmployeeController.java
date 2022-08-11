@@ -28,10 +28,6 @@ import com.sts.exception.ResourceNotFoundException;
 import com.sts.model.EmployeeDetails;
 import com.sts.repository.EmployeeRepository;
 
-
-
-
-
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/")
@@ -40,10 +36,7 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	private LocalDate sdformat;
-	
-	
-		
-	
+
 	// create employee rest api
 	@PostMapping("/captureemployee")
 	public EmployeeDetails createStudent(@RequestBody EmployeeDetails employee) {
@@ -52,17 +45,7 @@ public class EmployeeController {
 	
 	
 	
-	// get employee by id rest api
 	@GetMapping("/calculatetaxs/{id}")
-	public ResponseEntity<EmployeeDetails> getEmployeeById(@PathVariable Long id) {
-		EmployeeDetails employee = employeeRepository.findById(id)
-				.orElseThrow(() -> new com.sts.exception.ResourceNotFoundException("Employee not exist with id :" + id));
-		return ResponseEntity.ok(employee);
-	}
-	
-
-	
-	@GetMapping("/employees/{id}")
 	public ResponseEntity<Map> taxEmployee(@PathVariable Long id){
 		EmployeeDetails employee = employeeRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
@@ -71,10 +54,10 @@ public class EmployeeController {
 		int empsalary = employee.getSalary();
 		Date deoj = employee.getDoj();
 
-		   	 ZoneId defaultZoneId = ZoneId.systemDefault();
+		  ZoneId defaultZoneId = ZoneId.systemDefault();
 		  LocalDate startdate = sdformat.parse("2022-04-01");
 	      LocalDate enddate = sdformat.parse("2023-03-31");
-	      LocalDate dojd = deoj.toInstant().atZone(ZoneId.of("America/Los_Angeles")).toLocalDate();
+	      LocalDate dojd = new java.sql.Date(deoj.getTime()).toLocalDate();
 	      
 	
 	    int Totalsalary=0;
@@ -85,7 +68,7 @@ public class EmployeeController {
 	         days= 0;
 	         
 	      } else {
-	    	  Period p = Period.between(startdate, dojd);
+	    	  Period p = Period.between(dojd, enddate);
 	    	  month =p.getMonths();
 	    	  days= p.getDays();
 	    	 
@@ -100,19 +83,25 @@ public class EmployeeController {
 				tax=0;
 			}
 			else if(i<=500000)
-				tax=0.05*(i-200000);
+				tax=0.05*(i-250000);
 			else if(i<=1000000)
 				tax=(0.1*(i-500000))+12500;
 			
 			else
 				tax=(0.2*(i-1000000))+62500;
+		
 		if (i>2500000) {
-		tax = tax + (i-2500000)*0.2;		
+		tax = tax + ((i-2500000)*0.2);		
 		}
-//         return(empsalary);
+
 		Map map = new HashMap();
-		map.put("name", employee.getFirstName());
+		map.put("tax", tax);
+//		map.put("doj", dojd);
 		map.put("salary", empsalary);
+		map.put("Total salary", Totalsalary);
+		//map.put("Total month", month);
+		//map.put("Total day", days);
+		map.put("name", employee.getFirstName());
 		return ResponseEntity.ok(map);
 	}
 
