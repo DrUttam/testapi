@@ -54,16 +54,16 @@ public class EmployeeDetails {
 	
 
 
-	public EmployeeDetails(String firstName, String lastName, String emailId, String mobileNo, Date doj,
-			int salary) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.emailId = emailId;
-		this.mobileNo = mobileNo;
-		this.doj = doj;
-		this.salary = salary;
-	}
+//	public EmployeeDetails(String firstName, String lastName, String emailId, String mobileNo, Date doj,
+//			int salary) {
+//		super();
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//		this.emailId = emailId;
+//		this.mobileNo = mobileNo;
+//		this.doj = doj;
+//		this.salary = salary;
+//	}
 
 
 
@@ -73,6 +73,24 @@ public class EmployeeDetails {
 
 	public long getId() {
 		return id;
+	}
+
+
+
+
+
+
+
+	public EmployeeDetails(long id, String firstName, String lastName, String emailId, String mobileNo, Date doj,
+			int salary) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.emailId = emailId;
+		this.mobileNo = mobileNo;
+		this.doj = doj;
+		this.salary = salary;
 	}
 
 

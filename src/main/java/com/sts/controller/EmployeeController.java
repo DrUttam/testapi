@@ -63,7 +63,7 @@ public class EmployeeController {
 
 	
 	@GetMapping("/employees/{id}")
-	public ResponseEntity<Integer> taxEmployee(@PathVariable Long id){
+	public ResponseEntity<Map> taxEmployee(@PathVariable Long id){
 		EmployeeDetails employee = employeeRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
 		
@@ -110,13 +110,11 @@ public class EmployeeController {
 		tax = tax + (i-2500000)*0.2;		
 		}
 //         return(empsalary);
-		return ResponseEntity.ok(empsalary);
+		Map map = new HashMap();
+		map.put("name", employee.getFirstName());
+		map.put("salary", empsalary);
+		return ResponseEntity.ok(map);
 	}
-
-
-
-
-
 
 }
 	
